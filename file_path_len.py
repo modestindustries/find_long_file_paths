@@ -1,10 +1,12 @@
 #!/usr/bin/python
 #
-# Takes a directory as an option, recursively checks the directory structure for files with a pathname with more than 256 chars.
+# Takes a directory as an option, recursively checks the directory structure for files with a pathname with more than 1024 chars.
 #
 # Arg parsing code is courtesy of Greg Neagle.
 #
 #
+# For later:
+# 10.12 PATH_MAX = 1024 NAME_MAX = 255
 
 import optparse
 import os
@@ -12,7 +14,7 @@ import sys
     
 def main():
     '''Main'''
-    usage = "usage: %prog [options] /path/to/output.pkg"
+    usage = "usage: %prog [options]"
         
     long_file_path = 0
     total_files = 0
@@ -23,7 +25,7 @@ def main():
         parser, 'Options')
     optional_user_options.add_option(
         '--characters', '-c',
-        help='Max file path characters. If this is not provided, the default of 256 is used.')
+        help='Max file path characters. If this is not provided, the default of 1024 is used.')
     optional_user_options.add_option(
         '--filepath', '-f', help='File path to start at. Defaults to the current directory.')
 
@@ -38,7 +40,7 @@ def main():
     if options.characters:
         max_len = options.characters
     else:
-        max_len = 256
+        max_len = 1024
         
     if options.filepath:
         start_location = options.filepath
@@ -58,7 +60,7 @@ def main():
     
     # Tell me how many files were checked, and how many long file paths were found
     print ("Number of file paths checked: {}".format(total_files))
-    print ("Number of file paths with more than {} characters  : {}".format(max_len, long_file_path))
+    print ("Number of file paths longer than {} characters  : {}".format(max_len, long_file_path))
 
 if __name__ == "__main__":
     main()
