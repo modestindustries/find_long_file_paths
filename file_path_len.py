@@ -11,13 +11,17 @@
 import optparse
 import os
 import sys  
-    
+
+def walk_error_handler(exception_instance):
+    '''Handle errors from os.walk()'''
+    print("Error: Can't access {} ".format(exception_instance.filename))   
+
 def main():
     '''Main'''
     usage = "usage: %prog [options]"
         
-    long_file_path = 0
-    total_files = 0
+    file_path_too_long = 0
+    total_files_checked = 0
     
     parser = optparse.OptionParser(usage=usage)
 
@@ -51,16 +55,20 @@ def main():
     print ("Starting in {}".format(start_location))
     print ("Looking for file paths longer than {} characters.".format(max_len))
 
-    for dirpath, dirs, files in os.walk("."):
+    for dirpath, dirs, files in os.walk(".", onerror=walk_error_handler):
         path_len = len(dirpath)
-        total_files += 1
+        total_files_checked += 1
         if (path_len >= max_len):
             print ("{}: {}".format(path_len, dirpath))
-            long_file_path += 1
+            file_path_too_long += 1
     
     # Tell me how many files were checked, and how many long file paths were found
-    print ("Number of file paths checked: {}".format(total_files))
-    print ("Number of file paths longer than {} characters  : {}".format(max_len, long_file_path))
+    print ("Number of file paths checked: {}".format(total_files_checked))
+    print ("Number of file paths longer than {} characters  : {}".format(max_len, file_path_too_long))
 
+
+
+
+    
 if __name__ == "__main__":
     main()
