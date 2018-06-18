@@ -1,6 +1,10 @@
 #!/usr/bin/python
-
+#
 # Takes a directory as an option, recursively checks the directory structure for files with a pathname with more than 256 chars.
+#
+# Arg parsing code is courtesy of Greg Neagle.
+#
+#
 
 import optparse
 import os
