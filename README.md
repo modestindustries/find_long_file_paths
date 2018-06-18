@@ -1,1 +1,3 @@
-Python utility to find file paths longer than 256 characters, which sometimes causes file save / open problems in legacy software.
+Python utility to find file paths longer than 1024 characters on a macOS file system.
+
+
